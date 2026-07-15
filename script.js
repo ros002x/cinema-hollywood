@@ -1,4 +1,4 @@
-const movies = [
+const fallbackMovies = [
   {
     title: "Avatar: Fire and Ash",
     kicker: "Ora in programmazione",
@@ -10,29 +10,11 @@ const movies = [
     alt: "Locandina Avatar: Fire and Ash",
     trailerEmbed: "https://www.youtube.com/embed/bf38f_JINyw",
   },
-  {
-    title: "Zootopia 2",
-    kicker: "Family show",
-    description: "Animazione per famiglie con spettacoli pomeridiani e weekend.",
-    genre: "Animazione",
-    time: "16:30 / 18:45",
-    room: "Sala unica",
-    poster: "assets/poster-zootopia-2-2k.jpg",
-    alt: "Locandina Zootopia 2",
-    trailerEmbed: "https://www.youtube.com/embed/BjkIOU5PhyQ",
-  },
-  {
-    title: "Superman",
-    kicker: "Prima serata",
-    description: "Blockbuster d'azione per dare ritmo alla programmazione serale.",
-    genre: "Azione",
-    time: "19:15 / 22:00",
-    room: "Sala unica",
-    poster: "assets/poster-superman-2025-2k.jpg",
-    alt: "Locandina Superman",
-    trailerEmbed: "https://www.youtube.com/embed/Ox8ZLF6cGM0",
-  },
 ];
+
+let movies = fallbackMovies;
+let activeIndex = 0;
+let carouselTimer;
 
 const header = document.querySelector("[data-header]");
 const navToggle = document.querySelector("[data-nav-toggle]");
@@ -49,11 +31,10 @@ const slidePoster = document.querySelector("[data-slide-poster]");
 const heroTicket = document.querySelector("[data-hero-ticket]");
 const heroTrailer = document.querySelector("[data-hero-trailer]");
 const dots = document.querySelector("[data-carousel-dots]");
+const movieGrid = document.querySelector("[data-movie-grid]");
 const trailerModal = document.querySelector("[data-trailer-modal]");
 const trailerFrame = document.querySelector("[data-trailer-frame]");
 const trailerTitle = document.querySelector("[data-trailer-title]");
-let activeIndex = 0;
-let carouselTimer;
 
 const syncHeader = () => {
   header.classList.toggle("is-scrolled", window.scrollY > 12);
@@ -71,11 +52,10 @@ const showToast = (title) => {
 const findMovie = (title) => movies.find((movie) => movie.title === title);
 
 const openTrailer = (movie) => {
-  if (!movie) return;
+  if (!movie || !movie.trailerEmbed) return;
   trailerTitle.textContent = `Trailer · ${movie.title}`;
   const separator = movie.trailerEmbed.includes("?") ? "&" : "?";
   trailerFrame.src = `${movie.trailerEmbed}${separator}autoplay=1&rel=0`;
-
   trailerModal.classList.add("is-open");
   trailerModal.setAttribute("aria-hidden", "false");
   document.body.classList.add("nav-open");
@@ -123,11 +103,60 @@ const renderSlide = (index) => {
   }, 120);
 };
 
+const renderMovieGrid = () => {
+  movieGrid.innerHTML = movies
+    .map(
+      (movie) => `
+        <article class="movie-card">
+          <img src="${movie.poster}" alt="${movie.alt}">
+          <div class="movie-body">
+            <p class="movie-meta">${movie.genre} &middot; ${movie.time}</p>
+            <h3>${movie.title}</h3>
+            <p>${movie.description}</p>
+            <button class="trailer-button" type="button" data-trailer="${movie.title}">Trailer</button>
+            <button type="button" data-ticket="${movie.title}">Prenota</button>
+          </div>
+        </article>
+      `
+    )
+    .join("");
+};
+
 const restartCarousel = () => {
   window.clearInterval(carouselTimer);
   carouselTimer = window.setInterval(() => {
     renderSlide(activeIndex + 1);
   }, 5200);
+};
+
+const bindDynamicMovieButtons = () => {
+  movieGrid.addEventListener("click", (event) => {
+    const trailerButton = event.target.closest("[data-trailer]");
+    const ticketButton = event.target.closest("[data-ticket]");
+    if (trailerButton) {
+      openTrailer(findMovie(trailerButton.dataset.trailer));
+    }
+    if (ticketButton) {
+      showToast(ticketButton.dataset.ticket);
+    }
+  });
+};
+
+const loadMovies = async () => {
+  try {
+    const response = await fetch("movies.json", { cache: "no-store" });
+    if (!response.ok) throw new Error("movies.json non disponibile");
+    const data = await response.json();
+    if (Array.isArray(data) && data.length > 0) {
+      movies = data;
+    }
+  } catch (error) {
+    console.warn(error);
+  }
+
+  renderMovieGrid();
+  renderSlide(0);
+  restartCarousel();
 };
 
 navToggle.addEventListener("click", () => {
@@ -167,18 +196,6 @@ heroTrailer.addEventListener("click", () => {
   openTrailer(movies[activeIndex]);
 });
 
-document.querySelectorAll("[data-ticket]").forEach((button) => {
-  button.addEventListener("click", () => {
-    showToast(button.dataset.ticket);
-  });
-});
-
-document.querySelectorAll("[data-trailer]").forEach((button) => {
-  button.addEventListener("click", () => {
-    openTrailer(findMovie(button.dataset.trailer));
-  });
-});
-
 document.querySelectorAll("[data-trailer-close]").forEach((button) => {
   button.addEventListener("click", closeTrailer);
 });
@@ -190,6 +207,6 @@ window.addEventListener("keydown", (event) => {
 });
 
 window.addEventListener("scroll", syncHeader, { passive: true });
-renderSlide(0);
-restartCarousel();
+bindDynamicMovieButtons();
+loadMovies();
 syncHeader();

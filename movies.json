@@ -1,0 +1,35 @@
+[
+  {
+    "title": "Avatar: Fire and Ash",
+    "kicker": "Ora in programmazione",
+    "description": "Grande spettacolo sci-fi nella sala unica del Cinema Hollywood, pensato per una serata evento.",
+    "genre": "Sci-fi",
+    "time": "18:00 / 21:30",
+    "room": "Sala unica",
+    "poster": "assets/poster-avatar-fire-and-ash-2k.jpg",
+    "alt": "Locandina Avatar: Fire and Ash",
+    "trailerEmbed": "https://www.youtube.com/embed/bf38f_JINyw"
+  },
+  {
+    "title": "Zootopia 2",
+    "kicker": "Family show",
+    "description": "Animazione per famiglie con spettacoli pomeridiani e weekend.",
+    "genre": "Animazione",
+    "time": "16:30 / 18:45",
+    "room": "Sala unica",
+    "poster": "assets/poster-zootopia-2-2k.jpg",
+    "alt": "Locandina Zootopia 2",
+    "trailerEmbed": "https://www.youtube.com/embed/BjkIOU5PhyQ"
+  },
+  {
+    "title": "Superman",
+    "kicker": "Prima serata",
+    "description": "Blockbuster d'azione per dare ritmo alla programmazione serale.",
+    "genre": "Azione",
+    "time": "19:15 / 22:00",
+    "room": "Sala unica",
+    "poster": "assets/poster-superman-2025-2k.jpg",
+    "alt": "Locandina Superman",
+    "trailerEmbed": "https://www.youtube.com/embed/Ox8ZLF6cGM0"
+  }
+]
