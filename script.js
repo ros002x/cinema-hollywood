@@ -8,6 +8,8 @@ const movies = [
     room: "Sala 1",
     poster: "assets/poster-avatar-fire-and-ash-2k.jpg",
     alt: "Locandina Avatar: Fire and Ash",
+    trailerUrl: "https://www.youtube.com/results?search_query=Avatar+Fire+and+Ash+official+trailer",
+    trailerEmbed: "",
   },
   {
     title: "Zootopia 2",
@@ -18,6 +20,8 @@ const movies = [
     room: "Sala 2",
     poster: "assets/poster-zootopia-2-2k.jpg",
     alt: "Locandina Zootopia 2",
+    trailerUrl: "https://www.youtube.com/results?search_query=Zootopia+2+official+trailer",
+    trailerEmbed: "",
   },
   {
     title: "Superman",
@@ -28,6 +32,8 @@ const movies = [
     room: "Sala 1",
     poster: "assets/poster-superman-2025-2k.jpg",
     alt: "Locandina Superman",
+    trailerUrl: "https://www.youtube.com/results?search_query=Superman+2025+official+trailer+DC",
+    trailerEmbed: "",
   },
 ];
 
@@ -44,7 +50,13 @@ const slideTime = document.querySelector("[data-slide-time]");
 const slideRoom = document.querySelector("[data-slide-room]");
 const slidePoster = document.querySelector("[data-slide-poster]");
 const heroTicket = document.querySelector("[data-hero-ticket]");
+const heroTrailer = document.querySelector("[data-hero-trailer]");
 const dots = document.querySelector("[data-carousel-dots]");
+const trailerModal = document.querySelector("[data-trailer-modal]");
+const trailerFrame = document.querySelector("[data-trailer-frame]");
+const trailerTitle = document.querySelector("[data-trailer-title]");
+const trailerFallback = document.querySelector("[data-trailer-fallback]");
+const trailerLink = document.querySelector("[data-trailer-link]");
 let activeIndex = 0;
 let carouselTimer;
 
@@ -59,6 +71,33 @@ const showToast = (title) => {
   window.ticketToastTimer = window.setTimeout(() => {
     toast.classList.remove("is-visible");
   }, 3600);
+};
+
+const findMovie = (title) => movies.find((movie) => movie.title === title);
+
+const openTrailer = (movie) => {
+  if (!movie) return;
+  trailerTitle.textContent = `Trailer · ${movie.title}`;
+  trailerLink.href = movie.trailerUrl;
+
+  if (movie.trailerEmbed) {
+    trailerFrame.src = `${movie.trailerEmbed}?autoplay=1&rel=0`;
+    trailerFallback.classList.add("is-hidden");
+  } else {
+    trailerFrame.src = "";
+    trailerFallback.classList.remove("is-hidden");
+  }
+
+  trailerModal.classList.add("is-open");
+  trailerModal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("nav-open");
+};
+
+const closeTrailer = () => {
+  trailerFrame.src = "";
+  trailerModal.classList.remove("is-open");
+  trailerModal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("nav-open");
 };
 
 const closeNav = () => {
@@ -136,10 +175,30 @@ heroTicket.addEventListener("click", () => {
   showToast(movies[activeIndex].title);
 });
 
+heroTrailer.addEventListener("click", () => {
+  openTrailer(movies[activeIndex]);
+});
+
 document.querySelectorAll("[data-ticket]").forEach((button) => {
   button.addEventListener("click", () => {
     showToast(button.dataset.ticket);
   });
+});
+
+document.querySelectorAll("[data-trailer]").forEach((button) => {
+  button.addEventListener("click", () => {
+    openTrailer(findMovie(button.dataset.trailer));
+  });
+});
+
+document.querySelectorAll("[data-trailer-close]").forEach((button) => {
+  button.addEventListener("click", closeTrailer);
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && trailerModal.classList.contains("is-open")) {
+    closeTrailer();
+  }
 });
 
 window.addEventListener("scroll", syncHeader, { passive: true });

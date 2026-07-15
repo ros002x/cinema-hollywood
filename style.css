@@ -268,6 +268,12 @@ h3 {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.button.trailer {
+  border: 1px solid rgba(227, 180, 83, 0.48);
+  background: rgba(227, 180, 83, 0.12);
+  color: var(--ink);
+}
+
 .poster-stage {
   position: relative;
   display: grid;
@@ -468,6 +474,13 @@ h3 {
   color: #111;
 }
 
+.movie-body .trailer-button {
+  margin-bottom: 10px;
+  border: 1px solid rgba(227, 180, 83, 0.38);
+  background: rgba(227, 180, 83, 0.12);
+  color: var(--ink);
+}
+
 .feature-band {
   display: grid;
   grid-template-columns: 0.82fr 1fr;
@@ -541,6 +554,15 @@ address {
   font-style: normal;
 }
 
+.social-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  color: var(--gold);
+  font-weight: 800;
+}
+
 .footer-note {
   justify-self: end;
   max-width: 320px;
@@ -568,6 +590,93 @@ address {
 .toast.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.trailer-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: none;
+  place-items: center;
+  padding: 18px;
+}
+
+.trailer-modal.is-open {
+  display: grid;
+}
+
+.trailer-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.76);
+  backdrop-filter: blur(10px);
+}
+
+.trailer-dialog {
+  position: relative;
+  width: min(980px, 100%);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: #090a0d;
+  box-shadow: var(--shadow);
+}
+
+.trailer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.trailer-head button {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.trailer-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #050608;
+}
+
+.trailer-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.trailer-frame iframe[src=""] {
+  display: none;
+}
+
+.trailer-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 18px;
+  padding: 24px;
+  text-align: center;
+}
+
+.trailer-fallback p {
+  max-width: 520px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.trailer-fallback.is-hidden {
+  display: none;
 }
 
 @media (max-width: 900px) {
@@ -702,5 +811,9 @@ address {
   .hero-actions .button,
   .booking .button {
     width: 100%;
+  }
+
+  .trailer-dialog {
+    border-radius: 18px;
   }
 }

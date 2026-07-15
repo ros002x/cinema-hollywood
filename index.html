@@ -32,6 +32,8 @@
         <a href="#sale">Sale</a>
         <a href="#eventi">Eventi</a>
         <a href="#contatti">Contatti</a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener">FB</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener">IG</a>
         <a class="nav-ticket" href="#biglietti">Biglietti</a>
       </nav>
     </header>
@@ -55,6 +57,7 @@
             </div>
             <div class="hero-actions">
               <button class="button primary" type="button" data-hero-ticket>Prenota ora</button>
+              <button class="button trailer" type="button" data-hero-trailer>Trailer</button>
               <a class="button ghost" href="#programmazione">Tutta la programmazione</a>
             </div>
           </div>
@@ -107,6 +110,7 @@
               <p class="movie-meta">Sci-fi &middot; 18:00 / 21:30</p>
               <h3>Avatar: Fire and Ash</h3>
               <p>Spettacolo serale in sala principale, ideale per formato premium.</p>
+              <button class="trailer-button" type="button" data-trailer="Avatar: Fire and Ash">Trailer</button>
               <button type="button" data-ticket="Avatar: Fire and Ash">Prenota</button>
             </div>
           </article>
@@ -117,6 +121,7 @@
               <p class="movie-meta">Animazione &middot; 16:30 / 18:45</p>
               <h3>Zootopia 2</h3>
               <p>Film family per pomeriggio, weekend e pubblico ragazzi.</p>
+              <button class="trailer-button" type="button" data-trailer="Zootopia 2">Trailer</button>
               <button type="button" data-ticket="Zootopia 2">Prenota</button>
             </div>
           </article>
@@ -127,6 +132,7 @@
               <p class="movie-meta">Azione &middot; 19:15 / 22:00</p>
               <h3>Superman</h3>
               <p>Blockbuster d'azione per una programmazione da prima serata.</p>
+              <button class="trailer-button" type="button" data-trailer="Superman">Trailer</button>
               <button type="button" data-ticket="Superman">Prenota</button>
             </div>
           </article>
@@ -187,9 +193,36 @@
       <address>
         <a href="tel:+390000000000">+39 000 000 0000</a>
         <a href="mailto:info@cinemahollywood.it">info@cinemahollywood.it</a>
+        <span class="social-row">
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        </span>
       </address>
       <p class="footer-note">Dati provvisori da sostituire con contatti, indirizzo e programmazione ufficiali.</p>
     </footer>
+
+    <div class="trailer-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Trailer film" data-trailer-modal>
+      <div class="trailer-backdrop" data-trailer-close></div>
+      <div class="trailer-dialog">
+        <div class="trailer-head">
+          <strong data-trailer-title>Trailer</strong>
+          <button type="button" aria-label="Chiudi trailer" data-trailer-close>Chiudi</button>
+        </div>
+        <div class="trailer-frame">
+          <iframe
+            title="Trailer"
+            src=""
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            data-trailer-frame
+          ></iframe>
+          <div class="trailer-fallback" data-trailer-fallback>
+            <p>Trailer interno pronto. Inserisci il link YouTube esatto per farlo partire qui.</p>
+            <a class="button primary" href="#" target="_blank" rel="noopener" data-trailer-link>Apri su YouTube</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="toast" role="status" aria-live="polite" data-toast></div>
     <script src="script.js"></script>
