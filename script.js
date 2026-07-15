@@ -19,7 +19,7 @@ const movies = [
     room: "Sala 2",
     poster: "assets/poster-zootopia-2-2k.jpg",
     alt: "Locandina Zootopia 2",
-    trailerEmbed: "https://www.youtube.com/embed?listType=search&list=Zootopia%202%20Official%20Trailer%20Disney",
+    trailerEmbed: "https://www.youtube.com/embed/BjkIOU5PhyQ",
   },
   {
     title: "Superman",
@@ -30,7 +30,7 @@ const movies = [
     room: "Sala 1",
     poster: "assets/poster-superman-2025-2k.jpg",
     alt: "Locandina Superman",
-    trailerEmbed: "https://www.youtube.com/embed?listType=search&list=Superman%202025%20Official%20Trailer%20DC",
+    trailerEmbed: "https://www.youtube.com/embed/Ox8ZLF6cGM0",
   },
 ];
 
