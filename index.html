@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cinema Hollywood | Film e biglietti</title>
+    <meta
+      name="description"
+      content="Cinema Hollywood: programmazione film, orari spettacoli, eventi e biglietti online."
+    >
+    <link rel="preload" as="image" href="assets/poster-avatar-fire-and-ash-2k.jpg">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="site-header" data-header>
+      <a class="brand" href="#home" aria-label="Cinema Hollywood home">
+        <span class="brand-mark">CH</span>
+        <span>
+          <strong>Cinema Hollywood</strong>
+          <small>Policoro</small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" data-nav>
+        <a href="#programmazione">Programmazione</a>
+        <a href="#sale">Sale</a>
+        <a href="#eventi">Eventi</a>
+        <a href="#contatti">Contatti</a>
+        <a class="nav-ticket" href="#biglietti">Biglietti</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="home" aria-label="Film in evidenza">
+        <div class="hero-bg" data-hero-bg></div>
+        <div class="hero-shade"></div>
+
+        <div class="hero-shell">
+          <div class="hero-copy">
+            <p class="eyebrow" data-slide-kicker>Ora in programmazione</p>
+            <h1 data-slide-title>Avatar: Fire and Ash</h1>
+            <p data-slide-description>
+              Grande spettacolo sci-fi in sala principale, pensato per una serata evento.
+            </p>
+            <div class="hero-meta">
+              <span data-slide-genre>Sci-fi</span>
+              <span data-slide-time>18:00 / 21:30</span>
+              <span data-slide-room>Sala 1</span>
+            </div>
+            <div class="hero-actions">
+              <button class="button primary" type="button" data-hero-ticket>Prenota ora</button>
+              <a class="button ghost" href="#programmazione">Tutta la programmazione</a>
+            </div>
+          </div>
+
+          <div class="poster-stage">
+            <button class="carousel-arrow prev" type="button" aria-label="Film precedente" data-carousel-prev>
+              <span>&lsaquo;</span>
+            </button>
+            <img
+              class="hero-poster"
+              src="assets/poster-avatar-fire-and-ash-2k.jpg"
+              alt="Locandina Avatar: Fire and Ash"
+              data-slide-poster
+            >
+            <button class="carousel-arrow next" type="button" aria-label="Film successivo" data-carousel-next>
+              <span>&rsaquo;</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="carousel-dots" aria-label="Seleziona film" data-carousel-dots></div>
+      </section>
+
+      <section class="quick-info" aria-label="Informazioni rapide">
+        <article>
+          <span>Oggi</span>
+          <strong>6 spettacoli</strong>
+        </article>
+        <article>
+          <span>Biglietti</span>
+          <strong>Online e cassa</strong>
+        </article>
+        <article>
+          <span>Esperienza</span>
+          <strong>Sale digitali</strong>
+        </article>
+      </section>
+
+      <section class="section" id="programmazione">
+        <div class="section-heading">
+          <p class="eyebrow">In sala</p>
+          <h2>Programmazione reale di esempio</h2>
+          <p>Tre titoli veri con locandina, pronti per capire il taglio visivo del nuovo sito.</p>
+        </div>
+
+        <div class="movie-grid">
+          <article class="movie-card">
+            <img src="assets/poster-avatar-fire-and-ash-2k.jpg" alt="Locandina Avatar: Fire and Ash">
+            <div class="movie-body">
+              <p class="movie-meta">Sci-fi &middot; 18:00 / 21:30</p>
+              <h3>Avatar: Fire and Ash</h3>
+              <p>Spettacolo serale in sala principale, ideale per formato premium.</p>
+              <button type="button" data-ticket="Avatar: Fire and Ash">Prenota</button>
+            </div>
+          </article>
+
+          <article class="movie-card">
+            <img src="assets/poster-zootopia-2-2k.jpg" alt="Locandina Zootopia 2">
+            <div class="movie-body">
+              <p class="movie-meta">Animazione &middot; 16:30 / 18:45</p>
+              <h3>Zootopia 2</h3>
+              <p>Film family per pomeriggio, weekend e pubblico ragazzi.</p>
+              <button type="button" data-ticket="Zootopia 2">Prenota</button>
+            </div>
+          </article>
+
+          <article class="movie-card">
+            <img src="assets/poster-superman-2025-2k.jpg" alt="Locandina Superman">
+            <div class="movie-body">
+              <p class="movie-meta">Azione &middot; 19:15 / 22:00</p>
+              <h3>Superman</h3>
+              <p>Blockbuster d'azione per una programmazione da prima serata.</p>
+              <button type="button" data-ticket="Superman">Prenota</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="feature-band" id="sale">
+        <div>
+          <p class="eyebrow">Cinema aggiornato</p>
+          <h2>Una presenza digitale piu veloce, visiva e facile da usare.</h2>
+        </div>
+        <div class="feature-list">
+          <article>
+            <strong>Hero con film in evidenza</strong>
+            <p>Il primo schermo mostra subito cosa vedere oggi, senza pagine datate o liste confuse.</p>
+          </article>
+          <article>
+            <strong>Mobile first</strong>
+            <p>Locandine, orari e pulsanti restano leggibili anche da smartphone.</p>
+          </article>
+          <article>
+            <strong>Pronto per GitHub Pages</strong>
+            <p>HTML, CSS e JavaScript statici: pubblicazione semplice e costi bassi.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split" id="eventi">
+        <div class="section-heading align-left">
+          <p class="eyebrow">Eventi</p>
+          <h2>Anteprime, rassegne e serate speciali</h2>
+          <p>
+            Questa area puo ospitare matinée scolastiche, compleanni, rassegne estive, spettacoli in lingua originale e comunicazioni importanti.
+          </p>
+        </div>
+        <div class="event-panel">
+          <p class="date">Prossimamente</p>
+          <h3>Rassegna cinema d'estate</h3>
+          <p>Una scheda evento con data, descrizione, orari e invito alla prenotazione.</p>
+        </div>
+      </section>
+
+      <section class="booking" id="biglietti">
+        <div>
+          <p class="eyebrow">Biglietti</p>
+          <h2>Da collegare alla biglietteria reale.</h2>
+          <p>Il pulsante puo diventare un link WhatsApp, un numero telefonico, una pagina esterna o un sistema di acquisto online.</p>
+        </div>
+        <a class="button primary" href="tel:+390000000000">Chiama il cinema</a>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="contatti">
+      <div>
+        <strong>Cinema Hollywood</strong>
+        <p>Policoro &middot; Basilicata</p>
+      </div>
+      <address>
+        <a href="tel:+390000000000">+39 000 000 0000</a>
+        <a href="mailto:info@cinemahollywood.it">info@cinemahollywood.it</a>
+      </address>
+      <p class="footer-note">Dati provvisori da sostituire con contatti, indirizzo e programmazione ufficiali.</p>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite" data-toast></div>
+    <script src="script.js"></script>
+  </body>
+</html>
