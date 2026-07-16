@@ -1,40 +1,4 @@
-const fallbackMovies = [
-  {
-    title: "The Odyssey",
-    kicker: "Evento IMAX",
-    description: "Il nuovo kolossal di Christopher Nolan: un'epica avventura mitologica pensata per il grande schermo.",
-    genre: "Epico",
-    time: "18:00 / 21:30",
-    room: "Sala unica",
-    poster: "assets/poster-the-odyssey-2k.jpg",
-    alt: "Locandina The Odyssey",
-    trailerEmbed: "https://www.youtube.com/embed/9R58AyRe1RI",
-  },
-  {
-    title: "Supergirl",
-    kicker: "Universo DC",
-    description: "Kara Zor-El arriva sul grande schermo in una nuova avventura DC dal tono ribelle e spettacolare.",
-    genre: "Supereroi",
-    time: "17:30 / 20:00",
-    room: "Sala unica",
-    poster: "assets/poster-supergirl-2k.jpg",
-    alt: "Locandina Supergirl",
-    trailerEmbed: "https://www.youtube.com/embed/UZR5_Qlb7kA",
-  },
-  {
-    title: "Spider-Man: Brand New Day",
-    kicker: "Marvel",
-    description: "Peter Parker riparte da una nuova vita, tra azione urbana, nuove minacce e il ritorno di Spider-Man.",
-    genre: "Azione",
-    time: "19:00 / 22:00",
-    room: "Sala unica",
-    poster: "assets/poster-spiderman-brand-new-day-2k.jpg",
-    alt: "Locandina Spider-Man: Brand New Day",
-    trailerEmbed: "https://www.youtube.com/embed/OHg1vv9NNXo",
-  },
-];
-
-let movies = fallbackMovies;
+let movies = [];
 let activeIndex = 0;
 let carouselTimer;
 
@@ -52,6 +16,8 @@ const slideRoom = document.querySelector("[data-slide-room]");
 const slidePoster = document.querySelector("[data-slide-poster]");
 const heroTicket = document.querySelector("[data-hero-ticket]");
 const heroTrailer = document.querySelector("[data-hero-trailer]");
+const carouselPrev = document.querySelector("[data-carousel-prev]");
+const carouselNext = document.querySelector("[data-carousel-next]");
 const dots = document.querySelector("[data-carousel-dots]");
 const movieGrid = document.querySelector("[data-movie-grid]");
 const trailerModal = document.querySelector("[data-trailer-modal]");
@@ -97,6 +63,11 @@ const closeNav = () => {
 };
 
 const renderDots = () => {
+  if (!movies.length) {
+    dots.innerHTML = "";
+    return;
+  }
+
   dots.innerHTML = movies
     .map((movie, index) => {
       const active = index === activeIndex ? " is-active" : "";
@@ -106,6 +77,8 @@ const renderDots = () => {
 };
 
 const renderSlide = (index) => {
+  if (!movies.length) return;
+
   activeIndex = (index + movies.length) % movies.length;
   const movie = movies[activeIndex];
 
@@ -119,6 +92,7 @@ const renderSlide = (index) => {
     slideRoom.textContent = movie.room;
     slidePoster.src = movie.poster;
     slidePoster.alt = movie.alt;
+    slidePoster.hidden = false;
     heroBg.style.setProperty("--active-poster", `url("${movie.poster}")`);
     renderDots();
     slidePoster.classList.remove("is-changing");
@@ -126,6 +100,11 @@ const renderSlide = (index) => {
 };
 
 const renderMovieGrid = () => {
+  if (!movies.length) {
+    movieGrid.innerHTML = "";
+    return;
+  }
+
   movieGrid.innerHTML = movies
     .map(
       (movie) => `
@@ -146,9 +125,27 @@ const renderMovieGrid = () => {
 
 const restartCarousel = () => {
   window.clearInterval(carouselTimer);
+  if (movies.length < 2) return;
   carouselTimer = window.setInterval(() => {
     renderSlide(activeIndex + 1);
   }, 5200);
+};
+
+const setMovieControlsEnabled = (enabled) => {
+  [heroTicket, heroTrailer].forEach((control) => {
+    control.disabled = !enabled;
+  });
+  carouselPrev.disabled = !enabled || movies.length < 2;
+  carouselNext.disabled = !enabled || movies.length < 2;
+};
+
+const preloadFirstPoster = () => {
+  if (!movies[0]?.poster) return;
+  const link = document.createElement("link");
+  link.rel = "preload";
+  link.as = "image";
+  link.href = movies[0].poster;
+  document.head.appendChild(link);
 };
 
 const bindDynamicMovieButtons = () => {
@@ -176,6 +173,18 @@ const loadMovies = async () => {
     console.warn(error);
   }
 
+  if (!movies.length) {
+    slideKicker.textContent = "Cinema Hollywood";
+    slideTitle.textContent = "Programmazione non disponibile";
+    slideDescription.textContent = "Riprova piu tardi o aggiorna il file movies.json.";
+    renderDots();
+    renderMovieGrid();
+    setMovieControlsEnabled(false);
+    return;
+  }
+
+  preloadFirstPoster();
+  setMovieControlsEnabled(true);
   renderMovieGrid();
   renderSlide(0);
   restartCarousel();
@@ -193,12 +202,14 @@ nav.addEventListener("click", (event) => {
   }
 });
 
-document.querySelector("[data-carousel-prev]").addEventListener("click", () => {
+carouselPrev.addEventListener("click", () => {
+  if (!movies.length) return;
   renderSlide(activeIndex - 1);
   restartCarousel();
 });
 
-document.querySelector("[data-carousel-next]").addEventListener("click", () => {
+carouselNext.addEventListener("click", () => {
+  if (!movies.length) return;
   renderSlide(activeIndex + 1);
   restartCarousel();
 });
@@ -211,10 +222,12 @@ dots.addEventListener("click", (event) => {
 });
 
 heroTicket.addEventListener("click", () => {
+  if (!movies.length) return;
   showToast(movies[activeIndex].title);
 });
 
 heroTrailer.addEventListener("click", () => {
+  if (!movies.length) return;
   openTrailer(movies[activeIndex]);
 });
 

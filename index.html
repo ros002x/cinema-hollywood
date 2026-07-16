@@ -8,7 +8,6 @@
       name="description"
       content="Cinema Hollywood: programmazione film, orari spettacoli, eventi e biglietti online."
     >
-    <link rel="preload" as="image" href="assets/poster-the-odyssey-2k.jpg">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -51,34 +50,34 @@
 
         <div class="hero-shell">
           <div class="hero-copy">
-            <p class="eyebrow" data-slide-kicker>Ora in programmazione</p>
-            <h1 data-slide-title>The Odyssey</h1>
+            <p class="eyebrow" data-slide-kicker>Cinema Hollywood</p>
+            <h1 data-slide-title>Programmazione</h1>
             <p data-slide-description>
-              Il nuovo kolossal di Christopher Nolan: un'epica avventura mitologica pensata per il grande schermo.
+              Caricamento dei film in sala.
             </p>
             <div class="hero-meta">
-              <span data-slide-genre>Epico</span>
-              <span data-slide-time>18:00 / 21:30</span>
+              <span data-slide-genre>Film</span>
+              <span data-slide-time>Orari</span>
               <span data-slide-room>Sala unica</span>
             </div>
             <div class="hero-actions">
-              <button class="button primary" type="button" data-hero-ticket>Prenota ora</button>
-              <button class="button trailer" type="button" data-hero-trailer>Trailer</button>
+              <button class="button primary" type="button" data-hero-ticket disabled>Prenota ora</button>
+              <button class="button trailer" type="button" data-hero-trailer disabled>Trailer</button>
               <a class="button ghost" href="#programmazione">Tutta la programmazione</a>
             </div>
           </div>
 
           <div class="poster-stage">
-            <button class="carousel-arrow prev" type="button" aria-label="Film precedente" data-carousel-prev>
+            <button class="carousel-arrow prev" type="button" aria-label="Film precedente" data-carousel-prev disabled>
               <span>&lsaquo;</span>
             </button>
             <img
               class="hero-poster"
-              src="assets/poster-the-odyssey-2k.jpg"
-              alt="Locandina The Odyssey"
+              alt=""
               data-slide-poster
+              hidden
             >
-            <button class="carousel-arrow next" type="button" aria-label="Film successivo" data-carousel-next>
+            <button class="carousel-arrow next" type="button" aria-label="Film successivo" data-carousel-next disabled>
               <span>&rsaquo;</span>
             </button>
           </div>
