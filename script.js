@@ -24,6 +24,20 @@ const trailerModal = document.querySelector("[data-trailer-modal]");
 const trailerFrame = document.querySelector("[data-trailer-frame]");
 const trailerTitle = document.querySelector("[data-trailer-title]");
 
+const escapeHtml = (value) =>
+  String(value).replace(/[&<>"']/g, (char) => {
+    const entities = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    };
+    return entities[char];
+  });
+
+const formatTitle = (title) => String(title).replace(/-/g, "\u2011");
+
 const syncHeader = () => {
   header.classList.toggle("is-scrolled", window.scrollY > 12);
 };
@@ -37,11 +51,9 @@ const showToast = (title) => {
   }, 3600);
 };
 
-const findMovie = (title) => movies.find((movie) => movie.title === title);
-
 const openTrailer = (movie) => {
   if (!movie || !movie.trailerEmbed) return;
-  trailerTitle.textContent = `Trailer · ${movie.title}`;
+  trailerTitle.textContent = `Trailer - ${formatTitle(movie.title)}`;
   const separator = movie.trailerEmbed.includes("?") ? "&" : "?";
   trailerFrame.src = `${movie.trailerEmbed}${separator}autoplay=1&rel=0`;
   trailerModal.classList.add("is-open");
@@ -71,7 +83,7 @@ const renderDots = () => {
   dots.innerHTML = movies
     .map((movie, index) => {
       const active = index === activeIndex ? " is-active" : "";
-      return `<button class="${active}" type="button" aria-label="Mostra ${movie.title}" data-dot="${index}"></button>`;
+      return `<button class="${active}" type="button" aria-label="Mostra ${escapeHtml(formatTitle(movie.title))}" data-dot="${index}"></button>`;
     })
     .join("");
 };
@@ -85,7 +97,7 @@ const renderSlide = (index) => {
   slidePoster.classList.add("is-changing");
   window.setTimeout(() => {
     slideKicker.textContent = movie.kicker;
-    slideTitle.textContent = movie.title;
+    slideTitle.textContent = formatTitle(movie.title);
     slideDescription.textContent = movie.description;
     slideGenre.textContent = movie.genre;
     slideTime.textContent = movie.time;
@@ -107,15 +119,15 @@ const renderMovieGrid = () => {
 
   movieGrid.innerHTML = movies
     .map(
-      (movie) => `
+      (movie, index) => `
         <article class="movie-card">
-          <img src="${movie.poster}" alt="${movie.alt}">
+          <img src="${escapeHtml(movie.poster)}" alt="${escapeHtml(movie.alt)}">
           <div class="movie-body">
-            <p class="movie-meta">${movie.genre} &middot; ${movie.time}</p>
-            <h3>${movie.title}</h3>
-            <p>${movie.description}</p>
-            <button class="trailer-button" type="button" data-trailer="${movie.title}">Trailer</button>
-            <button type="button" data-ticket="${movie.title}">Prenota</button>
+            <p class="movie-meta">${escapeHtml(movie.genre)} &middot; ${escapeHtml(movie.time)}</p>
+            <h3>${escapeHtml(formatTitle(movie.title))}</h3>
+            <p>${escapeHtml(movie.description)}</p>
+            <button class="trailer-button" type="button" data-trailer-index="${index}">Trailer</button>
+            <button type="button" data-ticket-index="${index}">Prenota</button>
           </div>
         </article>
       `
@@ -150,13 +162,14 @@ const preloadFirstPoster = () => {
 
 const bindDynamicMovieButtons = () => {
   movieGrid.addEventListener("click", (event) => {
-    const trailerButton = event.target.closest("[data-trailer]");
-    const ticketButton = event.target.closest("[data-ticket]");
+    const trailerButton = event.target.closest("[data-trailer-index]");
+    const ticketButton = event.target.closest("[data-ticket-index]");
     if (trailerButton) {
-      openTrailer(findMovie(trailerButton.dataset.trailer));
+      openTrailer(movies[Number(trailerButton.dataset.trailerIndex)]);
     }
     if (ticketButton) {
-      showToast(ticketButton.dataset.ticket);
+      const movie = movies[Number(ticketButton.dataset.ticketIndex)];
+      if (movie) showToast(movie.title);
     }
   });
 };
