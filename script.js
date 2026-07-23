@@ -164,14 +164,14 @@ const renderMovieGrid = () => {
       (movie, index) => `
         <article class="movie-card">
           <img src="${escapeHtml(movie.poster)}" alt="${escapeHtml(movie.alt)}">
-          <div class="movie-body">
-            <p class="movie-meta">${escapeHtml(movie.genre)} &middot; ${escapeHtml(movie.time)}</p>
-            <h3>${escapeHtml(formatTitle(movie.title))}</h3>
+            <div class="movie-body">
+              <p class="movie-meta">${escapeHtml(movie.genre)} &middot; ${escapeHtml(movie.time)}</p>
+              <h3>${escapeHtml(formatTitle(movie.title))}</h3>
+              <p>${escapeHtml(movie.description)}</p>
+              <button class="trailer-button" type="button" data-trailer-index="${index}">Trailer</button>
             ${renderDateRange(movie)}
-            <p>${escapeHtml(movie.description)}</p>
-            <button class="trailer-button" type="button" data-trailer-index="${index}">Trailer</button>
-            <button type="button" data-ticket-index="${index}">Prenota</button>
-          </div>
+              <button type="button" data-ticket-index="${index}">Prenota</button>
+            </div>
         </article>
       `
     )
