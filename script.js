@@ -38,6 +38,46 @@ const escapeHtml = (value) =>
 
 const formatTitle = (title) => String(title).replace(/-/g, "\u2011");
 
+const months = [
+  "gennaio",
+  "febbraio",
+  "marzo",
+  "aprile",
+  "maggio",
+  "giugno",
+  "luglio",
+  "agosto",
+  "settembre",
+  "ottobre",
+  "novembre",
+  "dicembre",
+];
+
+const parseDate = (value) => {
+  if (!value) return null;
+  const [year, month, day] = String(value).split("-").map(Number);
+  if (!year || !month || !day) return null;
+  return { year, month, day };
+};
+
+const formatDateRange = (movie) => {
+  const from = parseDate(movie.fromDate);
+  const to = parseDate(movie.toDate);
+  if (!from || !to) return "";
+  const fromMonth = months[from.month - 1];
+  const toMonth = months[to.month - 1];
+  if (!fromMonth || !toMonth) return "";
+  if (from.month === to.month && from.year === to.year) {
+    return `Dal ${from.day} al ${to.day} ${toMonth}`;
+  }
+  return `Dal ${from.day} ${fromMonth} al ${to.day} ${toMonth}`;
+};
+
+const renderDateRange = (movie) => {
+  const dateRange = formatDateRange(movie);
+  return dateRange ? `<p class="movie-dates">${escapeHtml(dateRange)}</p>` : "";
+};
+
 const syncHeader = () => {
   header.classList.toggle("is-scrolled", window.scrollY > 12);
 };
@@ -124,6 +164,7 @@ const renderMovieGrid = () => {
           <img src="${escapeHtml(movie.poster)}" alt="${escapeHtml(movie.alt)}">
           <div class="movie-body">
             <p class="movie-meta">${escapeHtml(movie.genre)} &middot; ${escapeHtml(movie.time)}</p>
+            ${renderDateRange(movie)}
             <h3>${escapeHtml(formatTitle(movie.title))}</h3>
             <p>${escapeHtml(movie.description)}</p>
             <button class="trailer-button" type="button" data-trailer-index="${index}">Trailer</button>

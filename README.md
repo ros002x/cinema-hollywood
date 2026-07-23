@@ -15,6 +15,8 @@ Ogni film usa questi campi:
   "description": "Descrizione breve",
   "genre": "Genere",
   "time": "18:00 / 21:30",
+  "fromDate": "2026-07-23",
+  "toDate": "2026-07-29",
   "room": "Sala unica",
   "poster": "assets/nome-locandina.jpg",
   "alt": "Descrizione locandina",

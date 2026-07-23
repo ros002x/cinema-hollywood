@@ -494,7 +494,20 @@ h3 {
   padding: 22px;
 }
 
-.movie-body p:not(.movie-meta) {
+.movie-dates {
+  display: inline-flex;
+  width: fit-content;
+  margin-bottom: 14px;
+  padding: 7px 11px;
+  border: 1px solid rgba(227, 180, 83, 0.34);
+  border-radius: 999px;
+  background: rgba(227, 180, 83, 0.11);
+  color: var(--ink);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.movie-body p:not(.movie-meta):not(.movie-dates) {
   min-height: 72px;
   color: var(--muted);
   line-height: 1.55;
