@@ -14,7 +14,7 @@ Ogni film usa questi campi:
   "kicker": "Etichetta nel carosello",
   "description": "Descrizione breve",
   "genre": "Genere",
-  "time": "18:00 / 21:30",
+  "showtimes": ["18:00", "21:30"],
   "room": "Sala unica",
   "poster": "assets/nome-locandina.jpg",
   "alt": "Descrizione locandina",

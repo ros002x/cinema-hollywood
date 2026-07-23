@@ -20,6 +20,7 @@ const carouselPrev = document.querySelector("[data-carousel-prev]");
 const carouselNext = document.querySelector("[data-carousel-next]");
 const dots = document.querySelector("[data-carousel-dots]");
 const movieGrid = document.querySelector("[data-movie-grid]");
+const todayCount = document.querySelector("[data-today-count]");
 const trailerModal = document.querySelector("[data-trailer-modal]");
 const trailerFrame = document.querySelector("[data-trailer-frame]");
 const trailerTitle = document.querySelector("[data-trailer-title]");
@@ -37,6 +38,17 @@ const escapeHtml = (value) =>
   });
 
 const formatTitle = (title) => String(title).replace(/-/g, "\u2011");
+
+const getShowtimes = (movie) => {
+  if (Array.isArray(movie.showtimes)) return movie.showtimes.filter(Boolean);
+  if (movie.time) return String(movie.time).split("/").map((time) => time.trim()).filter(Boolean);
+  return [];
+};
+
+const renderShowtimeChips = (movie) =>
+  getShowtimes(movie)
+    .map((time) => `<span class="showtime-chip">${escapeHtml(time)}</span>`)
+    .join("");
 
 const syncHeader = () => {
   header.classList.toggle("is-scrolled", window.scrollY > 12);
@@ -100,7 +112,7 @@ const renderSlide = (index) => {
     slideTitle.textContent = formatTitle(movie.title);
     slideDescription.textContent = movie.description;
     slideGenre.textContent = movie.genre;
-    slideTime.textContent = movie.time;
+    slideTime.innerHTML = renderShowtimeChips(movie);
     slideRoom.textContent = movie.room;
     slidePoster.src = movie.poster;
     slidePoster.alt = movie.alt;
@@ -123,9 +135,13 @@ const renderMovieGrid = () => {
         <article class="movie-card">
           <img src="${escapeHtml(movie.poster)}" alt="${escapeHtml(movie.alt)}">
           <div class="movie-body">
-            <p class="movie-meta">${escapeHtml(movie.genre)} &middot; ${escapeHtml(movie.time)}</p>
+            <p class="movie-meta">${escapeHtml(movie.genre)} &middot; ${escapeHtml(movie.room)}</p>
             <h3>${escapeHtml(formatTitle(movie.title))}</h3>
             <p>${escapeHtml(movie.description)}</p>
+            <div class="movie-showtimes" aria-label="Orari ${escapeHtml(formatTitle(movie.title))}">
+              <span>Orari oggi</span>
+              <div>${renderShowtimeChips(movie)}</div>
+            </div>
             <button class="trailer-button" type="button" data-trailer-index="${index}">Trailer</button>
             <button type="button" data-ticket-index="${index}">Prenota</button>
           </div>
@@ -174,6 +190,11 @@ const bindDynamicMovieButtons = () => {
   });
 };
 
+const renderTodayCount = () => {
+  const total = movies.reduce((sum, movie) => sum + getShowtimes(movie).length, 0);
+  todayCount.textContent = `${total} ${total === 1 ? "spettacolo" : "spettacoli"}`;
+};
+
 const loadMovies = async () => {
   try {
     const response = await fetch("movies.json", { cache: "no-store" });
@@ -192,6 +213,7 @@ const loadMovies = async () => {
     slideDescription.textContent = "Riprova piu tardi o aggiorna il file movies.json.";
     renderDots();
     renderMovieGrid();
+    todayCount.textContent = "0 spettacoli";
     setMovieControlsEnabled(false);
     return;
   }
@@ -199,6 +221,7 @@ const loadMovies = async () => {
   preloadFirstPoster();
   setMovieControlsEnabled(true);
   renderMovieGrid();
+  renderTodayCount();
   renderSlide(0);
   restartCarousel();
 };
