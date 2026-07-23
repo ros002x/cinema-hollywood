@@ -495,19 +495,29 @@ h3 {
 }
 
 .movie-dates {
-  display: inline-flex;
-  width: fit-content;
-  margin-bottom: 14px;
-  padding: 7px 11px;
-  border: 1px solid rgba(227, 180, 83, 0.34);
-  border-radius: 999px;
-  background: rgba(227, 180, 83, 0.11);
-  color: var(--ink);
-  font-size: 0.86rem;
-  font-weight: 800;
+  display: grid;
+  gap: 4px;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid rgba(227, 180, 83, 0.4);
+  border-radius: 14px;
+  background: rgba(227, 180, 83, 0.12);
 }
 
-.movie-body p:not(.movie-meta):not(.movie-dates) {
+.movie-dates span {
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.movie-dates strong {
+  color: var(--ink);
+  font-size: 0.98rem;
+}
+
+.movie-body p:not(.movie-meta) {
   min-height: 72px;
   color: var(--muted);
   line-height: 1.55;

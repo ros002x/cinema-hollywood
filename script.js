@@ -75,7 +75,9 @@ const formatDateRange = (movie) => {
 
 const renderDateRange = (movie) => {
   const dateRange = formatDateRange(movie);
-  return dateRange ? `<p class="movie-dates">${escapeHtml(dateRange)}</p>` : "";
+  return dateRange
+    ? `<div class="movie-dates"><span>In programmazione</span><strong>${escapeHtml(dateRange)}</strong></div>`
+    : "";
 };
 
 const syncHeader = () => {
@@ -164,8 +166,8 @@ const renderMovieGrid = () => {
           <img src="${escapeHtml(movie.poster)}" alt="${escapeHtml(movie.alt)}">
           <div class="movie-body">
             <p class="movie-meta">${escapeHtml(movie.genre)} &middot; ${escapeHtml(movie.time)}</p>
-            ${renderDateRange(movie)}
             <h3>${escapeHtml(formatTitle(movie.title))}</h3>
+            ${renderDateRange(movie)}
             <p>${escapeHtml(movie.description)}</p>
             <button class="trailer-button" type="button" data-trailer-index="${index}">Trailer</button>
             <button type="button" data-ticket-index="${index}">Prenota</button>
