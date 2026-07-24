@@ -482,6 +482,10 @@ h3 {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
 }
 
+.movie-poster {
+  position: relative;
+}
+
 .movie-card img {
   display: block;
   width: 100%;
@@ -494,17 +498,22 @@ h3 {
   padding: 22px;
 }
 
-.movie-dates {
+.movie-date-badge {
+  position: absolute;
+  left: 14px;
+  top: 14px;
   display: grid;
   gap: 4px;
-  margin: 0 0 16px;
-  padding: 12px 14px;
+  max-width: calc(100% - 28px);
+  padding: 10px 12px;
   border: 1px solid rgba(227, 180, 83, 0.4);
   border-radius: 14px;
-  background: rgba(227, 180, 83, 0.12);
+  background: rgba(7, 8, 10, 0.82);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(14px);
 }
 
-.movie-dates span {
+.movie-date-badge span {
   color: var(--gold);
   font-size: 0.72rem;
   font-weight: 900;
@@ -512,9 +521,10 @@ h3 {
   text-transform: uppercase;
 }
 
-.movie-dates strong {
+.movie-date-badge strong {
   color: var(--ink);
   font-size: 0.98rem;
+  line-height: 1.15;
 }
 
 .movie-body p:not(.movie-meta) {

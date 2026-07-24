@@ -76,7 +76,7 @@ const formatDateRange = (movie) => {
 const renderDateRange = (movie) => {
   const dateRange = formatDateRange(movie);
   return dateRange
-    ? `<div class="movie-dates"><span>In programmazione</span><strong>${escapeHtml(dateRange)}</strong></div>`
+    ? `<div class="movie-date-badge"><span>In programmazione</span><strong>${escapeHtml(dateRange)}</strong></div>`
     : "";
 };
 
@@ -163,15 +163,17 @@ const renderMovieGrid = () => {
     .map(
       (movie, index) => `
         <article class="movie-card">
-          <img src="${escapeHtml(movie.poster)}" alt="${escapeHtml(movie.alt)}">
-            <div class="movie-body">
-              <p class="movie-meta">${escapeHtml(movie.genre)} &middot; ${escapeHtml(movie.time)}</p>
-              <h3>${escapeHtml(formatTitle(movie.title))}</h3>
-              <p>${escapeHtml(movie.description)}</p>
-              <button class="trailer-button" type="button" data-trailer-index="${index}">Trailer</button>
+          <div class="movie-poster">
+            <img src="${escapeHtml(movie.poster)}" alt="${escapeHtml(movie.alt)}">
             ${renderDateRange(movie)}
-              <button type="button" data-ticket-index="${index}">Prenota</button>
-            </div>
+          </div>
+              <div class="movie-body">
+                <p class="movie-meta">${escapeHtml(movie.genre)} &middot; ${escapeHtml(movie.time)}</p>
+                <h3>${escapeHtml(formatTitle(movie.title))}</h3>
+                <p>${escapeHtml(movie.description)}</p>
+                <button class="trailer-button" type="button" data-trailer-index="${index}">Trailer</button>
+                <button type="button" data-ticket-index="${index}">Prenota</button>
+              </div>
         </article>
       `
     )
